@@ -9,14 +9,21 @@ class LinkedPair:
         self.value = value
         self.next = None
 
+    def __repr__(self):
+        return f'LinkedPair: {self.key}, {self.value}'
 
 # '''
 # Resizing hash table
 # '''
+
+
 class HashTable:
     def __init__(self, capacity):
         self.capacity = capacity
         self.storage = [None] * capacity
+
+    def __repr__(self):
+        return f'{self.storage}'
 
 
 def hash(string, max):
@@ -25,6 +32,7 @@ def hash(string, max):
         hash = ((hash << 5) + hash) + ord(char)
 
     return hash % max
+
 
 def hash_table_insert(hash_table, key, value):
     index = hash(key, len(hash_table.storage))
@@ -61,7 +69,6 @@ def hash_table_remove(hash_table, key):
             hash_table.storage[index] = current_pair.next
         else:
             last_pair.next = current_pair.next
-
 
 
 def hash_table_retrieve(hash_table, key):

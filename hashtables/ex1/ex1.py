@@ -14,8 +14,6 @@ def get_indices_of_item_weights(weights, length, limit):
     for i in range(length):
         w2 = hash_table_retrieve(ht, limit-weights[i])
         if w2 != None:
-            # idealy at this point our two index should be
-            # i and w2
             if i > w2:
                 return (i, w2)
             else:
