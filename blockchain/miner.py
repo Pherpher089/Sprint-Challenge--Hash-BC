@@ -4,7 +4,6 @@ import requests
 import sys
 
 from uuid import uuid4
-
 from timeit import default_timer as timer
 
 import random
@@ -25,6 +24,9 @@ def proof_of_work(last_proof):
     print("Searching for next proof")
     proof = 0
     #  TODO: Your code here
+    while valid_proof(last_proof, proof) == False:
+        proof += 1
+        print(f'testing {proof}')
 
     print("Proof found: " + str(proof) + " in " + str(timer() - start))
     return proof
@@ -40,7 +42,16 @@ def valid_proof(last_hash, proof):
     """
 
     # TODO: Your code here!
-    pass
+    guess = f'{last_hash}{proof}'.encode()
+    last_guess = hashlib.sha256(f'{last_hash}'.encode()).hexdigest()
+    guess_hash = hashlib.sha256(guess).hexdigest()
+    # print(f'last guess: {last_guess[58:]}')
+    # print(f'new guess: {guess_hash[:6]}')
+    # print("\n")
+    # print(f"whole last guess {last_guess}")
+    # print(f"whole new guess {guess_hash}")
+    # print("\n")
+    return last_guess[58:] == guess_hash[:6]
 
 
 if __name__ == '__main__':
@@ -53,11 +64,11 @@ if __name__ == '__main__':
     coins_mined = 0
 
     # Load or create ID
-    f = open("my_id.txt", "r")
-    id = f.read()
-    print("ID is", id)
-    f.close()
-
+    # f = open("my_id.txt", "r")
+    # id = f.read()
+    # print("ID is", id)
+    # f.close()
+    id = 'christopher-tutor'
     if id == 'NONAME\n':
         print("ERROR: You must change your name in `my_id.txt`!")
         exit()
